@@ -1,0 +1,3 @@
+[submodule "external/web3-AI"]
+	path = external/web3-AI
+	url = git@github.com:KoalaYan/web3-AI.git

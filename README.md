@@ -19,6 +19,34 @@ New-NetFirewallRule -Name sshd -DisplayName 'OpenSSH Server (sshd)' -Enabled Tru
 ssh rsa login:
 https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh-server-configuration
 
+win remote ansible support:
+https://support.huawei.com/enterprise/zh/doc/EDOC1100327176/734f2c0
+https://cloud.tencent.com/developer/article/2115363
+
+On host:
+`pip install pywinrm`
+
+On client:
+
+If `Get-NetConnectionProfile` results are all `NetworkCategory=Public`
+```
+RemoteSigned -c "Set-NetConnectionProfile -NetworkCategory Private"
+```
+
+```
+# Change powershell policy to remotesigned
+set-executionpolicy remotesigned
+# Open WinRM
+winrm get winrm/config/service
+winrm quickconfig
+winrm set winrm/config/service/auth @{Basic="true"}
+winrm set winrm/config/service @{AllowUnencrypted="true"}
+```
+
+Host test ping:
+```
+ansible windows -m win_ping -i inventory.ini
+```
 ## For UNIX / MacOS
 
 ```
