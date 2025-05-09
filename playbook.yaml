@@ -1,0 +1,20 @@
+- name: My first play
+  hosts: myhosts  # 目标主机组，与.ini文件中的组名一致
+  tasks:
+    - name: Ping my hosts  # 测试连通
+      ansible.builtin.ping:
+
+    - name: Print message
+      ansible.builtin.debug:
+        msg: Hello world
+
+    - name: Execute test.sh in target directory
+      ansible.builtin.shell:
+        cmd: bash test.sh  # 执行脚本
+        chdir: "/home/person1/SJTU/dianyuan309/fsq/repos/web3-AI/web3FL_simulation"  # cd到脚本所在目录
+      register: script_output  # 可选：记录执行结果
+
+    - name: Display script output (可选，可考虑丰富输出)  # 显示脚本输出，可补充
+      ansible.builtin.debug:
+        var: script_output.stdout_lines
+      when: script_output.stdout is defined
